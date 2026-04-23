@@ -6,7 +6,15 @@ import ReactMarkdown from "react-markdown";
 import CheckIcon from "./icons/CheckIcon";
 import CopyIcon from "./icons/CopyIcon";
 
-const ChatMessage = ({ msg, i }) => {
+type ChatMessageType = {
+  msg: {
+    role: string;
+    text: string;
+  };
+  i: number;
+};
+
+const ChatMessage = ({ msg, i }: ChatMessageType) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
