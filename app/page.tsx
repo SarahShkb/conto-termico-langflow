@@ -49,7 +49,7 @@ export default function ChatPage() {
               className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[80%] p-3 rounded-lg ${
+                className={`max-w-[80%] p-3 rounded-lg whitespace-pre-line ${
                   msg.role === "user"
                     ? "bg-blue-600 text-white"
                     : "bg-white border text-gray-800"
