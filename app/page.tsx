@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { sendLangflowMessage } from "./actions";
+import ReactMarkdown from "react-markdown";
 //import { v4 as uuidv4 } from "uuid"; // npm install uuid && npm install --save-dev @types/uuid
 
 interface Message {
@@ -32,7 +33,7 @@ export default function ChatPage() {
 
   return (
     <div className="w-full h-full items-center justify-center">
-      <div className="flex flex-col h-screen mx-auto max-w-2xl p-4 bg-gray-50 ">
+      <div className="flex flex-col h-screen mx-auto w-full lg:max-w-[80%] p-4 bg-gray-50 ">
         <header className="py-4 border-b flex justify-between">
           <div className="flex flex-col justify-center">
             <h1 className="text-xl font-bold">Conto Termico ChatBot</h1>
@@ -49,13 +50,35 @@ export default function ChatPage() {
               className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[80%] p-3 rounded-lg whitespace-pre-line ${
+                className={`max-w-[80%] p-3 rounded-lg ${
                   msg.role === "user"
                     ? "bg-blue-600 text-white"
                     : "bg-white border text-gray-800"
                 }`}
               >
-                {msg.text}
+                <div className="prose prose-sm max-w-none">
+                  <ReactMarkdown
+                    components={{
+                      ul: ({ node, ...props }) => (
+                        <ul className="ml-6 list-disc space-y-1" {...props} />
+                      ),
+                      ol: ({ node, ...props }) => (
+                        <ol
+                          className="ml-6 list-decimal space-y-2"
+                          {...props}
+                        />
+                      ),
+                      li: ({ node, ...props }) => (
+                        <li className="ml-2" {...props} />
+                      ),
+                      p: ({ node, ...props }) => (
+                        <p className="mb-2" {...props} />
+                      ),
+                    }}
+                  >
+                    {msg.text}
+                  </ReactMarkdown>
+                </div>
               </div>
             </div>
           ))}
