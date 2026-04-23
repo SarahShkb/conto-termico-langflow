@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { sendLangflowMessage } from "./actions";
-import ReactMarkdown from "react-markdown";
-//import { v4 as uuidv4 } from "uuid"; // npm install uuid && npm install --save-dev @types/uuid
+import ChatMessage from "./ChatMessage";
 
 interface Message {
   role: "user" | "ai";
@@ -45,42 +44,7 @@ export default function ChatPage() {
         {/* Chat History */}
         <div className="flex-1 overflow-y-auto scrollbar-gutter-stable py-4 space-y-4">
           {messages.map((msg, i) => (
-            <div
-              key={i}
-              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-            >
-              <div
-                className={`max-w-[80%] p-3 rounded-lg ${
-                  msg.role === "user"
-                    ? "bg-blue-600 text-white"
-                    : "bg-white border text-gray-800"
-                }`}
-              >
-                <div className="prose prose-sm max-w-none">
-                  <ReactMarkdown
-                    components={{
-                      ul: ({ node, ...props }) => (
-                        <ul className="ml-6 list-disc space-y-1" {...props} />
-                      ),
-                      ol: ({ node, ...props }) => (
-                        <ol
-                          className="ml-6 list-decimal space-y-2"
-                          {...props}
-                        />
-                      ),
-                      li: ({ node, ...props }) => (
-                        <li className="ml-2" {...props} />
-                      ),
-                      p: ({ node, ...props }) => (
-                        <p className="mb-2" {...props} />
-                      ),
-                    }}
-                  >
-                    {msg.text}
-                  </ReactMarkdown>
-                </div>
-              </div>
-            </div>
+            <ChatMessage msg={msg} i={i} key={i} />
           ))}
           {loading && (
             <div className="text-gray-400 text-sm animate-pulse">
